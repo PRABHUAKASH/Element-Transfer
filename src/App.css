@@ -1,7 +1,15 @@
 .App {
   text-align: center;
 }
-
+h1 {
+  border: 2px solid black;
+}
+.ant-transfer {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px !important;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

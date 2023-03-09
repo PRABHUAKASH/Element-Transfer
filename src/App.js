@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { Transfer } from 'antd';
 
 function App() {
+  const [mockData, setMockData] = useState([]);
+  const [targetKeys, setTargetKeys] = useState([]);
+
+  useEffect(() => {
+    getMock();
+  }, []);
+
+  const getMock = () => {
+    const targetKeys = [];
+    const mockData = [];
+    for (let i = 0; i < 20; i++) {
+      const data = {
+        key: i.toString(),
+        title: `content${i + 1}`,
+        description: `description of content${i + 1}`,
+        chosen: Math.random() * 2 > 1,
+      };
+      if (data.chosen) {
+        targetKeys.push(data.key);
+      }
+      mockData.push(data);
+    }
+    setMockData(mockData);
+    setTargetKeys(targetKeys);
+  };
+
+  const handleChange = (targetKeys) => {
+    setTargetKeys(targetKeys);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Data Tranfer Between Two Buckets</h1>
+      <Transfer
+        dataSource={mockData}
+        showSearch
+        listStyle={{
+          width: 300,
+          height: 350,
+        }}
+        operations={['Forward', 'Backward']}
+        targetKeys={targetKeys}
+        onChange={handleChange}
+        render={(item) => `${item.title}-${item.description}`}
+      />
     </div>
   );
 }
